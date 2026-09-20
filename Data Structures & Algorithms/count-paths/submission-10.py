@@ -1,0 +1,27 @@
+# O(m * n) time, O(m * n) space
+# class Solution:
+#     def uniquePaths(self, m: int, n: int) -> int:
+#         def memoization(r: int, c: int, m: int, n: int, cache):
+#             if r == m or c == n:
+#                 return 0
+#             if cache[r][c] > 0:
+#                 return cache[r][c]
+#             if r == m - 1 and c == n - 1:
+#                 return 1
+#             cache[r][c] = memoization(r + 1, c, m, n, cache) + memoization(r, c + 1, m, n, cache)
+#             return cache[r][c]
+#         return memoization(0, 0, m, n, [[0] * n for i in range(m)])
+
+# O(m * n) time, O(min(m, n)) space
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        if m < n:
+            m, n = n, m
+        prevRow = [0] * n
+        for r in range(m-1, -1, -1):
+            currRow = [0] * n
+            currRow[n - 1] = 1
+            for c in range(n-2, -1, -1):
+                currRow[c] = currRow[c + 1] + prevRow[c]
+            prevRow = currRow
+        return prevRow[0]
