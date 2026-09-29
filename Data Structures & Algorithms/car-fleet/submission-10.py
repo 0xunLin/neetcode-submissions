@@ -1,0 +1,23 @@
+# both solutions are O(nlogn) time and O(n) space complexity
+
+# class Solution:
+#     def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+#         cars = sorted(zip(position, speed), reverse=True)
+#         arrival_time_stack = []
+#         for p, s in cars:
+#             time = (target - p)/s
+#             if not arrival_time_stack or time > arrival_time_stack[-1]:
+#                 arrival_time_stack.append(time)
+#         return len(arrival_time_stack)
+
+class Solution:
+    def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
+        cars = sorted(zip(position, speed), reverse=True)
+        fleet = 0
+        max_time = 0.0
+        for p, s in cars:
+            time = (target - p)/s
+            if time > max_time:
+                max_time = time
+                fleet += 1
+        return fleet
